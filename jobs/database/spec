@@ -6,4 +6,7 @@ templates: { ctl.erb: bin/ctl }
 packages: 
  - mongodb-3.6.1
 
-properties: {}
+properties:
+ database.port:
+  description: Port that the database listens on
+  default: 27017
