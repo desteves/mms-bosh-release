@@ -3,6 +3,7 @@ name: ops_manager
 
 templates: { ctl.erb: bin/ctl }
 
-packages: []
+packages: 
+ - mongodb-mms-3.6.1
 
 properties: {}

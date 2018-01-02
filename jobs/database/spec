@@ -3,6 +3,7 @@ name: database
 
 templates: { ctl.erb: bin/ctl }
 
-packages: []
+packages: 
+ - mongodb-3.6.1
 
 properties: {}

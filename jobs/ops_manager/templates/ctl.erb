@@ -11,6 +11,9 @@
      mkdir -p $RUN_DIR $LOG_DIR $OPS_DIR
      chown -R vcap:vcap $RUN_DIR $LOG_DIR $OPS_DIR
      echo $$ > $PIDFILE
+     ###  "Jobs never depend on other jobs." @http://bosh.io/docs/create-release.html
+     ### /gif angry
+     ### Conclusion: Relying on PreFlight Checks by mongodb-mms and monit retry attempts
      exec /var/vcap/packages/ops_manager/bin/mongodb-mms start
      ;;
 
