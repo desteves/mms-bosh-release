@@ -3,8 +3,5 @@ name: mongodb-3.6.1
 
 dependencies: []
 
-
-# Select your distribution from the list or the legacy Linux 64-bit version if your distribution is unavailable. Keep in mind that this legacy Linux 64 build may lack the performance optimizations present in targeted builds.
-
 files: 
- - mongodb-3.6.1/mongodb-linux-x86_64-3.6.1.tgz #  # https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.1.tgz
+- mongodb-3.6.1/mongodb-linux-x86_64-3.6.1.tgz #  # https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.1.tgz

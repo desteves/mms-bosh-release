@@ -4,7 +4,7 @@ name: database
 templates: { ctl.erb: bin/ctl }
 
 packages: 
- - mongodb-3.6.1
+- mongodb-3.6.1
 
 properties:
  database.port:
