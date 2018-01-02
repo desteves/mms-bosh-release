@@ -1,0 +1,5 @@
+check process ops_manager
+  with pidfile /var/vcap/sys/run/ops_manager/pid
+  start program "/var/vcap/jobs/ops_manager/bin/ctl start"
+  stop program "/var/vcap/jobs/ops_manager/bin/ctl stop"
+  group vcap

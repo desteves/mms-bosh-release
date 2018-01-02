@@ -1,0 +1,25 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/database
+LOG_DIR=/var/vcap/sys/log/database
+PIDFILE=${RUN_DIR}/pid
+DATA_DIR=/var/vcap/store/database
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR
+    chown -R vcap:vcap $RUN_DIR $LOG_DIR $DATA_DIR
+    echo $$ > $PIDFILE
+    exec /var/vcap/packages/mongodb/bin/mongod -f ${DATA_DIR}/config.yml
+    ;;
+
+  stop)
+    /var/vcap/packages/mongodb/bin/mongod <%= properties.database.port =%> --shutdown
+    rm -f $PIDFILE
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

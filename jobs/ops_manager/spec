@@ -1,0 +1,8 @@
+---
+name: ops_manager
+
+templates: { ctl.erb: bin/ctl }
+
+packages: []
+
+properties: {}
