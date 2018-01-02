@@ -1,1 +1,7 @@
 name: mongodb
+---
+blobstore:
+  provider: local
+  options:
+    blobstore_path: /Users/d/workspace/diana/mongodb-release/blobs
+final_name: mongodb
