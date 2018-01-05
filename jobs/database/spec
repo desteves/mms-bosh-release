@@ -10,3 +10,6 @@ properties:
  database.port:
   description: Port that the database listens on
   default: 27017
+ database.dbPath:
+  description: The directory where the mongod instance stores its data.
+  default: /var/vcap/store/database

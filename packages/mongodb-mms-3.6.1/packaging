@@ -1,2 +1,2 @@
 set -xe
-tar xzf mongodb-mms-3.6.1.591-1.x86_64.tar --directory ${BOSH_INSTALL_TARGET}
+tar xzf mongodb-mms-3.6.1/mongodb-mms-3.6.1.591-1.x86_64.tar --strip 1 --directory ${BOSH_INSTALL_TARGET}

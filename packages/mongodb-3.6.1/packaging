@@ -1,3 +1,3 @@
 set -xe
 
-tar xzf mongodb-linux-x86_64-3.6.1.tgz --directory ${BOSH_INSTALL_TARGET}
+tar xzf mongodb-3.6.1/mongodb-linux-x86_64-3.6.1.tgz --strip 1 --directory ${BOSH_INSTALL_TARGET}

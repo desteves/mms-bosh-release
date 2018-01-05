@@ -11,11 +11,13 @@ case $1 in
     mkdir -p $RUN_DIR $LOG_DIR $DATA_DIR
     chown -R vcap:vcap $RUN_DIR $LOG_DIR $DATA_DIR
     echo $$ > $PIDFILE
-    exec /var/vcap/packages/mongodb/bin/mongod -f ${DATA_DIR}/config.yml
+    exec /var/vcap/packages/mongodb-3.6.1/bin/mongod --port <%= properties.database.port %> --dbpath <%= properties.database.dbPath  %> \
+       >> $LOG_DIR/database.stdout.log \
+      2>> $LOG_DIR/database.stderr.log
     ;;
 
   stop)
-    /var/vcap/packages/mongodb/bin/mongod <%= properties.database.port =%> --shutdown
+    /var/vcap/packages/mongodb-3.6.1/bin/mongod <%= properties.database.port %> --shutdown
     rm -f $PIDFILE
     ;;
 

@@ -6,4 +6,10 @@ templates: { ctl.erb: bin/ctl }
 packages: 
 - mongodb-mms-3.6.1
 
-properties: {}
+properties:
+ ops_manager.enc_key_b64:
+  description: TODO 
+  default: EJmS9BJxqCdPrV8P4tZtfpGY2xqcvNfs
+ ops_manager.uri:
+  description: TODO 
+  default: mongodb://localhost:27017/
