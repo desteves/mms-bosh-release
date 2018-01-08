@@ -8,8 +8,8 @@ packages:
 
 properties:
  ops_manager.enc_key_b64:
-  description: TODO 
+  description: A base64 string equivalent of the 24-byte binary file used to encrypt and decrypt Ops Managers backing databases and user credentials. See http://bit.ly/2meuiBg
   default: EJmS9BJxqCdPrV8P4tZtfpGY2xqcvNfs
  ops_manager.uri:
-  description: TODO 
+  description: MongoDB Connection URI string pointing to the backend database. See http://bit.ly/2dPu67Q
   default: mongodb://localhost:27017/
