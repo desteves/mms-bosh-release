@@ -16,8 +16,8 @@ case $1 in
     # via the command line. This is to avoid unecessary redundancy.
     # Also, redirecting the output to the log files below.
     exec ${APP_DIR}/bin/mongod --port <%= properties.database.port %> --dbpath <%= properties.database.dbPath  %> \
-       >> $LOG_DIR/database.stdout.log \
-      2>> $LOG_DIR/database.stderr.log
+    >> ${LOG_DIR}/database.stdout.log \
+    2>> ${LOG_DIR}/database.stderr.log
     ;;
 
   stop)
@@ -25,7 +25,8 @@ case $1 in
     # eligible primary. TODO add extra logic to handle ^^^^
     ${APP_DIR}/bin/mongod <%= properties.database.port %> --shutdown
     kill -9 ${PIDFILE} 1>/dev/null 2>&1
-    rm -f $PIDFILE
+    rm -f ${DATA_DIR}/mongod.lock
+    rm -f ${PIDFILE}
     ;;
 
   *)

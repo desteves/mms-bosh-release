@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 RUN_DIR=/var/vcap/sys/run/ops_manager
 LOG_DIR=/var/vcap/sys/log/ops_manager
 PIDFILE=${RUN_DIR}/pid
@@ -10,17 +11,17 @@ APP_ENV="hosted"
 APP_ID="mms"
 BASE_PORT="8080"
 BASE_SSL_PORT="8443"
-JAVA_HOME="${APP_DIR}/lib/jdk"
+JAVA_HOME="${APP_DIR}/jdk"
 MMS_USER=vcap
 ENC_KEY_PATH=${APP_DIR}/gen.key
 ENC_KEY=<%= properties.ops_manager.enc_key_b64 %>
 URI_STR=<%= properties.ops_manager.uri %>
-PATH=${RUN_DIR}:${APP_DIR}/bin
+PATH=${PATH}:${RUN_DIR}:${APP_DIR}/bin
 
 # Note: Most of the start code has been modified from 
 # etc_rc.d_init.d_mongodb-mms.service and from the init_scripts
 # such code has the following header which I've included here for ref
-# ```
+# ```bash
 # (C) Copyright 2013, MongoDB, Inc.
 # chkconfig: 35 86 14
 # description: A simple script to run MongoDB Ops Manager server.
@@ -37,10 +38,11 @@ build_opts() {
 
 case $1 in
    start)
-     mkdir -p ${RUN_DIR} ${LOG_DIR} ${OPS_DIR}
-     chown -R vcap:vcap ${RUN_DIR} ${LOG_DIR} ${OPS_DIR}
+     mkdir -p ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} 
+     touch ${ENC_KEY_PATH}
+     chown -R vcap:vcap ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} ${APP_DIR}/conf/ ${ENC_KEY_PATH}
      echo $$ > ${PIDFILE}
-     base64 -d ${ENC_KEY} >  ${ENC_KEY_PATH}
+     echo ${ENC_KEY} | base64 -d >  ${ENC_KEY_PATH}
      chmod 600 ${ENC_KEY_PATH}
 
      ### "Jobs never depend on other jobs." 
@@ -49,19 +51,19 @@ case $1 in
      ### Conclusion: Relying on PreFlight Checks by mongodb-mms and monit retry
 	 ### attempts
      
-     sed -i.bak "s/^\(LOG_PATH=\).*/\1${LOG_DIR}"          ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s/^\(MMS_USER=\).*/\1${MMS_USER}"         ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s/^\(JAVA_HOME=\).*/\1${JAVA_HOME}"       ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s/^\(ENC_KEY_PATH=\).*/\1${ENC_KEY_PATH}" ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s/^\(mongo.mongoUri=\).*/\1${URI_STR}"    ${APP_DIR}/conf/conf-mms.properties
+     sed -i.bak "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|"          ${APP_DIR}/conf/mms.conf
+     sed -i.bak "s|^\(MMS_USER=\).*|\1${MMS_USER}|"         ${APP_DIR}/conf/mms.conf
+     sed -i.bak "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|"       ${APP_DIR}/conf/mms.conf
+     sed -i.bak "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|" ${APP_DIR}/conf/mms.conf
+     sed -i.bak "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|"    ${APP_DIR}/conf/conf-mms.properties
      
 	 ### Stripped from .../init.d/mongodb-mms.service
      # 
      # pushd mongodb-mms
      # source the init-functions, other functions have been copied above the
      # case statement.
- 	######################### preFlightCheck
- 	${JAVA_HOME}/bin/${APP_NAME} \
+ 	 ######################### preFlightCheck
+ 	 ${JAVA_HOME}/bin/${APP_NAME} \
       -Dcore.preflight.class=com.xgen.svc.mms.MmsPreFlightCheck \
       -Dlog_path=${LOG_DIR}/ops_manager.stdout \
       -Duser.timezone=GMT     -Dfile.encoding=UTF-8 \
@@ -71,11 +73,11 @@ case $1 in
       com.xgen.svc.core.PreFlightCheck \
       >>  ${LOG_DIR}/ops_manager.stdout.log \
       2>> ${LOG_DIR}/ops_manager.stderr.log
- 	if [[ $? != 0 ]]; then
+ 	 if [[ $? != 0 ]]; then
     	exit 1
- 	fi
-	######################### migrate
-	${JAVA_HOME}/bin/${APP_NAME} \
+ 	 fi
+	 ######################### migrate
+	 ${JAVA_HOME}/bin/${APP_NAME} \
       -Dmms.migrate=all \
       -Dcore.preflight.class=com.xgen.svc.mms.MmsPreFlightCheck \
       -Dlog_path=${LOG_DIR}/ops_manager.stdout \
@@ -86,16 +88,16 @@ case $1 in
       com.xgen.svc.common.migration.MigrationRunner \
       >>  ${LOG_DIR}/ops_manager.stdout.log \
       2>> ${LOG_DIR}/ops_manager.stderr.log
- 	if [[ $? != 0 ]]; then
-     exit 1
-	fi
- 	ulimit -n 64000 > /dev/null 2>&1
- 	ulimit -u 64000 > /dev/null 2>&1
- 	if ulimit -a | grep -q "\-v)" >/dev/null 2>&1; then
+ 	 if [[ $? != 0 ]]; then
+        exit 1
+	 fi
+ 	 ulimit -n 64000 > /dev/null 2>&1
+ 	 ulimit -u 64000 > /dev/null 2>&1
+ 	 if ulimit -a | grep -q "\-v)" >/dev/null 2>&1; then
     	ulimit -v unlimited > /dev/null 2>&1
-	fi
-	############################## START
-	opts_array=(
+	 fi
+	 ############################## START
+	 opts_array=(
          "-Dlog_path=${LOG_DIR}/ops_manager.stdout"
          "-Duser.timezone=GMT"
          "-Dfile.encoding=UTF-8"
@@ -122,14 +124,12 @@ case $1 in
          "-classpath ${APP_DIR}/classes/mms.jar:${APP_DIR}/agent:${APP_DIR}/agent/backup:${APP_DIR}/agent/monitoring:${APP_DIR}/agent/automation:${APP_DIR}/data/unit:${APP_DIR}/conf/:${APP_DIR}/lib/*"
 
  )
-    # JAVA_MMS_UI_OPTS empty?? TODO check
- 	jvm_opts=$( build_opts "${JAVA_MMS_UI_OPTS}" opts_array[@] )
- 	jvm_opts_instance="${jvm_opts} -Dinstance-id=0 -Dpid-filename=${PIDFILE}"
- 	exec ${JAVA_HOME}/bin/${APP_NAME} ${jvm_opts_instance} com.xgen.svc.core.ServerMain & \
+     # JAVA_MMS_UI_OPTS empty?? TODO check
+ 	 jvm_opts=$( build_opts "${JAVA_MMS_UI_OPTS}" opts_array[@] )
+ 	 jvm_opts_instance="${jvm_opts} -Dinstance-id=0 -Dpid-filename=${PIDFILE}"
+ 	 exec ${JAVA_HOME}/bin/${APP_NAME} ${jvm_opts_instance} com.xgen.svc.core.ServerMain & \
       >>  ${LOG_DIR}/ops_manager.stdout.log \
       2>> ${LOG_DIR}/ops_manager.stderr.log
-
-     # popd
      ### This causes monit to PID the mongodb-mms script as opposed to the
      ### process itself, hence the above refractoring
      # exec /var/vcap/packages/mongodb-mms-3.6.1/bin/mongodb-mms start 
@@ -137,7 +137,6 @@ case $1 in
 
    stop)
 	 kill ${PIDFILE} 1>/dev/null 2>&1
-	 sleep 22
      kill -9 ${PIDFILE} 1>/dev/null 2>&1 
      rm -f ${PIDFILE}
      ;;
