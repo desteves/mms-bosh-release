@@ -12,20 +12,17 @@ APP_ID="mms"
 BASE_PORT="8080"
 BASE_SSL_PORT="8443"
 JAVA_HOME="${APP_DIR}/jdk"
+SYSCONFIG="${APP_DIR}/conf/mms.conf"
 MMS_USER=vcap
 ENC_KEY_PATH=${APP_DIR}/gen.key
 ENC_KEY=<%= properties.ops_manager.enc_key_b64 %>
 URI_STR=<%= properties.ops_manager.uri %>
+FQDN=<%=  TODO TODO TODO TODO  %>
+email=<%= properties.ops_manager.email %>
 PATH=${PATH}:${RUN_DIR}:${APP_DIR}/bin
 
 # Note: Most of the start code has been modified from 
 # etc_rc.d_init.d_mongodb-mms.service and from the init_scripts
-# such code has the following header which I've included here for ref
-# ```bash
-# (C) Copyright 2013, MongoDB, Inc.
-# chkconfig: 35 86 14
-# description: A simple script to run MongoDB Ops Manager server.
-# ```
 ######################## build_opts
 build_opts() {
     local opts="$1"
@@ -51,17 +48,38 @@ case $1 in
      ### Conclusion: Relying on PreFlight Checks by mongodb-mms and monit retry
 	 ### attempts
      
-     sed -i.bak "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|"          ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s|^\(MMS_USER=\).*|\1${MMS_USER}|"         ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|"       ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|" ${APP_DIR}/conf/mms.conf
-     sed -i.bak "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|"    ${APP_DIR}/conf/conf-mms.properties
+     sed -e "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|"           \ 
+         -e "s|^\(MMS_USER=\).*|\1${MMS_USER}|"          \    
+         -e "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|"        \    
+         -e "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|"  \
+         -i.bak ${SYSCONFIG}
+     sed -e "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|"     \
+         -n -e "|^mms.centralUrl=|!p" \
+         -n -e "|^mms.backupCentralUrl=|!p" \
+         -n -e "|^mms.fromEmailAddr=|!p" \
+         -n -e "|^mms.replyToEmailAddr=|!p" \
+         -n -e "|^mms.adminFromEmailAddr=|!p" \
+         -n -e "|^mms.adminEmailAddr=|!p" \
+         -n -e "|^mms.bounceEmailAddr=|!p" \
+         -n -e "|^mms.backup.minimumOplogWindowHours=|!p" \
+            -e "$amms.centralUrl=http://${FQDN}:${BASE_PORT}" \
+            -e "$amms.backupCentralUrl=http://${FQDN}:8081" \
+            -e "$amms.fromEmailAddr=$email" \
+            -e "$amms.replyToEmailAddr=$email" \
+            -e "$amms.adminFromEmailAddr=$email" \
+            -e "$amms.adminEmailAddr=$email" \
+            -e "$amms.bounceEmailAddr=$email" \
+            -e "$amms.backup.minimumOplogWindowHours=0.01" \
+         -i.bak ${APP_DIR}/conf/conf-mms.properties
      
 	 ### Stripped from .../init.d/mongodb-mms.service
      # 
      # pushd mongodb-mms
      # source the init-functions, other functions have been copied above the
+     # source the mms.conf file
      # case statement.
+     [[ -f "${SYSCONFIG}" ]] && . "${SYSCONFIG}"
+
  	 ######################### preFlightCheck
  	 ${JAVA_HOME}/bin/${APP_NAME} \
       -Dcore.preflight.class=com.xgen.svc.mms.MmsPreFlightCheck \
