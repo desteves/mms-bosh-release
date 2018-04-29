@@ -48,12 +48,12 @@ case $1 in
      ### Conclusion: Relying on PreFlight Checks by mongodb-mms and monit retry
 	 ### attempts
      
-     sed -e "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|"           \
-         -e "s|^\(MMS_USER=\).*|\1${MMS_USER}|"          \
-         -e "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|"        \
-         -e "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|"  \
+     sed -e "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|" \
+         -e "s|^\(MMS_USER=\).*|\1${MMS_USER}|" \
+         -e "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|" \
+         -e "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|" \
          -i.bak ${SYSCONFIG}
-     sed -e "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|"     \
+     sed -e "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|" \
          -n -e "|^mms.centralUrl=|!p" \
          -n -e "|^mms.backupCentralUrl=|!p" \
          -n -e "|^mms.fromEmailAddr=|!p" \
