@@ -1,6 +1,6 @@
 ---
 blobstore:
-  provider: local
-  options:
-    blobstore_path: /Users/d/workspace/diana/mongodb-release/blobs
+  provider: gcs 
+  options: 
+    bucket_name: mongodb-blobs
 final_name: mongodb
