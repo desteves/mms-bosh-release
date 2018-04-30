@@ -92,7 +92,7 @@ case $1 in
       >>  ${LOG_DIR}/ops_manager.stdout.log \
       2>> ${LOG_DIR}/ops_manager.stderr.log
  	 if [[ $? != 0 ]]; then
-    	exit 1
+        exit 1
  	 fi
 	 ######################### migrate
 	 ${JAVA_HOME}/bin/${APP_NAME} \
@@ -112,7 +112,7 @@ case $1 in
  	 ulimit -n 64000 > /dev/null 2>&1
  	 ulimit -u 64000 > /dev/null 2>&1
  	 if ulimit -a | grep -q "\-v)" >/dev/null 2>&1; then
-    	ulimit -v unlimited > /dev/null 2>&1
+        ulimit -v unlimited > /dev/null 2>&1
 	 fi
 	 ############################## START
 	 opts_array=(
@@ -154,8 +154,8 @@ case $1 in
      ;;
 
    stop)
-	 kill ${PIDFILE} 1>/dev/null 2>&1
-     kill -9 ${PIDFILE} 1>/dev/null 2>&1 
+	 kill `cat ${PIDFILE}` 1>/dev/null 2>&1
+     kill -9 `cat ${PIDFILE}` 1>/dev/null 2>&1 
      rm -f ${PIDFILE}
      ;;
 
