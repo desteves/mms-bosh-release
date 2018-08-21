@@ -3,6 +3,8 @@ blobs
 dev_releases
 blobs
 releases/*.tgz
+mms-*.tgz
+releases/mongodb/*.yml
 releases/**/*.tgz
 .dev_builds
 .final_builds/jobs/**/*.tgz
