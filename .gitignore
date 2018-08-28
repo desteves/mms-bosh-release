@@ -1,4 +1,5 @@
 config/private.yml
+.diana-cmd
 blobs
 dev_releases
 blobs

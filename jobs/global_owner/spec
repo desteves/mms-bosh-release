@@ -1,0 +1,22 @@
+---
+name: global_owner
+
+templates: { ctl.erb: bin/ctl }
+
+packages:
+- global_owner
+
+properties:
+ mms.user:
+  description: The first user to be registered in MMS. This will be the global owner.
+  default: root
+ mms.pwd:
+  description: The password for the first user.  Your password must be at least eight (8) characters long and contain at least one letter, one digit and one special character.
+  default: r00t!r00t
+ mms.port:
+  description: The PORT for MMS.
+  default: 8080
+ mms.fqdn:
+  description: The FQDN for MMS.
+  default: localhost
+ 

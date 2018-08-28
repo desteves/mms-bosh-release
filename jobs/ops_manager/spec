@@ -4,7 +4,7 @@ name: ops_manager
 templates: { ctl.erb: bin/ctl }
 
 packages: 
-- mongodb-mms-3.6.1
+- mongodb-mms-4.0.1
 
 properties:
  ops_manager.enc_key_b64:

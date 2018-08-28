@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+USER=<%= properties.mms.user  =>
+PASS=<%= properties.mms.pwd =>
+FQDN=<%= properties.mms.fqdn =>
+PORT=<%= properties.mms.port =>
+MMSG=<%= properties.mms.org =>
+echo "Registering admin user (username: $USER, password: $PASS)"
+###  Your password must be at least eight (8) characters long and contain at least one letter, one digit and one special character.
+curl -X POST \
+http://${FQDN}:${PORT}/user/registerCall \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{"username":"$USER","password":"$PASS","firstName":"Global","lastName":"Owner","newGroup":true,"jobResponsibility":"","response":""}'

@@ -5,7 +5,7 @@ RUN_DIR=/var/vcap/sys/run/ops_manager
 LOG_DIR=/var/vcap/sys/log/ops_manager
 PIDFILE=${RUN_DIR}/pid
 OPS_DIR=/var/vcap/store/ops_manager
-APP_DIR=/var/vcap/packages/mongodb-mms-3.6.1
+APP_DIR=/var/vcap/packages/mongodb-mms-4.0.1
 APP_NAME="mms-app"
 APP_ENV="hosted"
 APP_ID="mms"
@@ -18,6 +18,7 @@ ENC_KEY_PATH=${APP_DIR}/gen.key
 ENC_KEY=<%= properties.ops_manager.enc_key_b64 %>
 URI_STR=<%= properties.ops_manager.uri %>
 FQDN=localhost
+MONGOVERSIONS_DIR="${APP_DIR}/automation_versions_directory"
 email=<%= properties.ops_manager.email %>
 PATH=${PATH}:${RUN_DIR}:${APP_DIR}/bin
 
@@ -35,16 +36,17 @@ build_opts() {
 
 case $1 in
    start)
-     mkdir -p ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} 
+   mkdir -p ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} ${MONGOVERSIONS_DIR} 
      touch ${ENC_KEY_PATH}
-     chown -R vcap:vcap ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} ${APP_DIR}/conf/ ${ENC_KEY_PATH}
+     chown -R vcap:vcap ${RUN_DIR} ${LOG_DIR} ${OPS_DIR} ${APP_DIR}/conf/ ${ENC_KEY_PATH} ${MONGOVERSIONS_DIR}
      echo $$ > ${PIDFILE}
      echo ${ENC_KEY} | base64 -d >  ${ENC_KEY_PATH}
      chmod 600 ${ENC_KEY_PATH}
 
      ### "Jobs never depend on other jobs." 
  	 ### ^  @http://bosh.io/docs/create-release.html
-     ### /gif angry
+     ### /giphy angry
+     ### :angry:
      ### Conclusion: Relying on PreFlight Checks by mongodb-mms and monit retry
 	 ### attempts
      
@@ -53,25 +55,24 @@ case $1 in
          -e "s|^\(JAVA_HOME=\).*|\1${JAVA_HOME}|" \
          -e "s|^\(ENC_KEY_PATH=\).*|\1${ENC_KEY_PATH}|" \
          -i.bak ${SYSCONFIG}
-     sed -e "s|^\(mongo.mongoUri=\).*|\1${URI_STR}|" \
-         -n -e "|^mms.centralUrl=|!p" \
-         -n -e "|^mms.backupCentralUrl=|!p" \
-         -n -e "|^mms.fromEmailAddr=|!p" \
-         -n -e "|^mms.replyToEmailAddr=|!p" \
-         -n -e "|^mms.adminFromEmailAddr=|!p" \
-         -n -e "|^mms.adminEmailAddr=|!p" \
-         -n -e "|^mms.bounceEmailAddr=|!p" \
-         -n -e "|^mms.backup.minimumOplogWindowHours=|!p" \
-            -e "$amms.centralUrl=http://${FQDN}:${BASE_PORT}" \
-            -e "$amms.backupCentralUrl=http://${FQDN}:8081" \
-            -e "$amms.fromEmailAddr=$email" \
-            -e "$amms.replyToEmailAddr=$email" \
-            -e "$amms.adminFromEmailAddr=$email" \
-            -e "$amms.adminEmailAddr=$email" \
-            -e "$amms.bounceEmailAddr=$email" \
-            -e "$amms.backup.minimumOplogWindowHours=0.01" \
-         -i.bak ${APP_DIR}/conf/conf-mms.properties
-     
+    cat <<EOF > ${APP_DIR}/conf/conf-mms.properties
+mongo.ssl=false
+mongo.mongoUri=${URI_STR}
+mms.centralUrl=http://${FQDN}:${BASE_PORT}
+mms.backupCentralUrl=http://${FQDN}:8081
+mms.fromEmailAddr=$email
+mms.replyToEmailAddr=$email
+mms.adminEmailAddr=$email
+mms.emailDaoClass=com.xgen.svc.core.dao.email.JavaEmailDao
+mms.backup.minimumOplogWindowHours=0.01
+mms.https.ClientCertificateMode=None
+mms.mail.port=25
+mms.mail.transport=smtp
+mms.mail.hostname=localhost
+mms.ignoreInitialUiSetup=true
+automation.versions.directory=${MONGOVERSIONS_DIR}
+mms.user.invitationOnly=false
+EOF
 	 ### Stripped from .../init.d/mongodb-mms.service
      # 
      # pushd mongodb-mms
@@ -150,11 +151,12 @@ case $1 in
       2>> ${LOG_DIR}/ops_manager.stderr.log
      ### This causes monit to PID the mongodb-mms script as opposed to the
      ### process itself, hence the above refractoring
-     # exec /var/vcap/packages/mongodb-mms-3.6.1/bin/mongodb-mms start 
+     # exec /var/vcap/packages/mongodb-mms-4.0.1/bin/mongodb-mms start 
      ;;
 
    stop)
 	 kill `cat ${PIDFILE}` 1>/dev/null 2>&1
+     pkill mongodb-mms 1>/dev/null 2>&1 
      kill -9 `cat ${PIDFILE}` 1>/dev/null 2>&1 
      rm -f ${PIDFILE}
      ;;

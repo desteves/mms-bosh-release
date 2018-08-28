@@ -1,0 +1,2 @@
+set -xe
+tar xzf mongodb-mms-4.0.1 --strip 1 --directory ${BOSH_INSTALL_TARGET}

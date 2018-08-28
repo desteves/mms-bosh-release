@@ -4,7 +4,7 @@ RUN_DIR=/var/vcap/sys/run/database
 LOG_DIR=/var/vcap/sys/log/database
 PIDFILE=${RUN_DIR}/pid
 DATA_DIR=/var/vcap/store/database
-APP_DIR=/var/vcap/packages/mongodb-3.6.1
+APP_DIR=/var/vcap/packages/mongodb-4.0.1
 
 case $1 in
 
@@ -21,12 +21,13 @@ case $1 in
     ;;
 
   stop)
-    # Note, this solution may not always work if we have a replica set and no
-    # eligible primary. TODO add extra logic to handle ^^^^
+    # Note: This solution may not always work if we have a replica set and no
+    # *eligible* primary. TODO add extra logic to handle ^^^^
     ${APP_DIR}/bin/mongod <%= properties.database.port %> --shutdown
     kill -9 ${PIDFILE} 1>/dev/null 2>&1
     rm -f ${DATA_DIR}/mongod.lock
     rm -f ${PIDFILE}
+    rm -f /tmp/mongodb-<%= properties.database.port %>.sock
     ;;
 
   *)
