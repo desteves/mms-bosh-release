@@ -1,11 +1,33 @@
 #!/bin/bash
 set -e
 
-USER=<%= properties.mms.user  =>
-PASS=<%= properties.mms.pwd =>
-FQDN=<%= properties.mms.fqdn =>
-PORT=<%= properties.mms.port =>
-MMSG=<%= properties.mms.org =>
+USER=<%= properties.mms.user  %>
+PASS=<%= properties.mms.pwd %>
+FQDN=<%= properties.mms.fqdn %>
+PORT=<%= properties.mms.port %>
+MMSG=<%= properties.mms.org %>
+
+echo "TODO"
+echo "Waiting for HTTP(S) to load..."
+
+attempts=5
+waittime=30 # seconds
+success=0
+
+while [[ -f $() ]]:
+
+
+    sleep $waittime
+    ++attempts
+done
+
+
+if [[ 1 != $success ]]; then
+    echo "Failed to register Global Owner. Check Logs and Try Again"
+    exit 1
+fi
+
+
 echo "Registering admin user (username: $USER, password: $PASS)"
 ###  Your password must be at least eight (8) characters long and contain at least one letter, one digit and one special character.
 curl -X POST \

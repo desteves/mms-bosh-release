@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 RUN_DIR=/var/vcap/sys/run/ops_manager
 LOG_DIR=/var/vcap/sys/log/ops_manager
 PIDFILE=${RUN_DIR}/pid
@@ -9,8 +8,8 @@ APP_DIR=/var/vcap/packages/mongodb-mms-4.0.1
 APP_NAME="mms-app"
 APP_ENV="hosted"
 APP_ID="mms"
-BASE_PORT="8080"
-BASE_SSL_PORT="8443"
+BASE_PORT=<%= properties.ops_manager.baseport %>
+BASE_SSL_PORT=<%= properties.ops_manager.sslport %>
 JAVA_HOME="${APP_DIR}/jdk"
 SYSCONFIG="${APP_DIR}/conf/mms.conf"
 MMS_USER=vcap
