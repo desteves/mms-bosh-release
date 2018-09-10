@@ -1,10 +1,8 @@
 # mongodb-release
 
-BOSH release for MongoDB Ops Manager 3.6.x
+BOSH release for MongoDB Ops Manager 4.0.x
 
-# TODO
+**THIS IS A STANDALONE INSTANCE WITH NO BACKUPS CONFIGURED, FOR DEV ONLY**
 
-
-- Upgrade to MongoDB Ops Manager 4.xx
 
 
