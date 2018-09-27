@@ -23,7 +23,7 @@ case $1 in
   stop)
     # Note: This solution may not always work if we have a replica set and no
     # *eligible* primary. TODO add extra logic to handle ^^^^
-    ${APP_DIR}/bin/mongod <%= properties.database.port %> --shutdown
+    ${APP_DIR}/bin/mongod --port <%= properties.database.port %> --shutdown
     kill -9 ${PIDFILE} 1>/dev/null 2>&1
     rm -f ${DATA_DIR}/mongod.lock
     rm -f ${PIDFILE}

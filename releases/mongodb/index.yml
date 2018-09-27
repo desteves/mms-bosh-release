@@ -9,6 +9,8 @@ builds:
     version: "5"
   bc6fd55f-0931-4eaa-6dc2-5a943d9ab7d9:
     version: "1"
+  cac2cecf-dd40-44f0-7669-286f3ae5eeb3:
+    version: "7"
   d06661ec-ad69-4a20-59f7-3b6123027bcb:
     version: "3"
 format-version: "2"
