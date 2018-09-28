@@ -19,3 +19,4 @@ releases/**/*.tgz
 packages/*/*.tgz
 packages/*/*.tar
 *.tgz
+create.json
