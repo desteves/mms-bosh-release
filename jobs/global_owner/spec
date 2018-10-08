@@ -4,8 +4,7 @@ name: global_owner
 templates: 
  run.sh: bin/run
 
-packages:
-- global_owner
+packages: []
 
 properties:
  mms.user:

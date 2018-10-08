@@ -7,7 +7,48 @@ BOSH release for MongoDB Ops Manager 4.0.x
 
 ## Build
 
-bosh create-release --json --final --tarball /tmp/mms.tgz | tee create.json
+`bosh create-release --json --final --tarball /tmp/mms.tgz | tee create.json`
+
+
+## Run Errand
+
+```
+export BOSH_CLIENT=admin
+export BOSH_CLIENT_SECRET=`bosh int ./creds.yml --path /admin_password`
+bosh -n -e os-bosh login
+bosh -e os-bosh -d mongodb-ops-manager run-errand global_owner
+
+## output
+# Using environment '10.0.2.2' as client 'admin'
+
+# Using deployment 'mongodb-ops-manager'
+
+# Task 593
+
+# Task 593 | 23:01:36 | Preparing deployment: Preparing deployment (00:00:00)
+# Task 593 | 23:01:36 | Running errand: ops_manager/79bc7a43-5562-4af5-814b-8e400401b9e2 (0) (00:00:01)
+# Task 593 | 23:01:37 | Fetching logs for ops_manager/79bc7a43-5562-4af5-814b-8e400401b9e2 (0): Finding and packing log files (00:00:01)
+
+# Task 593 Started  Sun Oct  7 23:01:36 UTC 2018
+# Task 593 Finished Sun Oct  7 23:01:38 UTC 2018
+# Task 593 Duration 00:00:02
+# Task 593 done
+
+# Instance   ops_manager/79bc7a43-5562-4af5-814b-8e400401b9e2
+# Exit Code  0
+#Stdout     Waiting up to 2 minutes for HTTP(S) to load...
+########################################
+#          Registering admin user (username: root, password: rootroot12345^)
+
+# 1 errand(s)
+
+# Succeeded
+
+```
+
+
+
+
 
 
 

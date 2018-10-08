@@ -1,5 +1,0 @@
- check process database
-   with pidfile /var/vcap/sys/run/database/pid
-   start program "/var/vcap/jobs/database/bin/ctl start"
-   stop program "/var/vcap/jobs/database/bin/ctl stop"
-   group vcap

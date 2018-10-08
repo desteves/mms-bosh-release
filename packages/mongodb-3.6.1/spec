@@ -1,7 +1,0 @@
----
-name: mongodb-3.6.1
-
-dependencies: []
-
-files: 
-- mongodb-3.6.1/mongodb-linux-x86_64-3.6.1.tgz #  # https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.1.tgz

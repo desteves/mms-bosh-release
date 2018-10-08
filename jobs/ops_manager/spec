@@ -1,25 +1,12 @@
 ---
 name: ops_manager
 
-templates: { ctl.erb: bin/ctl }
+templates: 
+  pre-start.sh: bin/pre-start
+  ctl.erb: bin/ctl 
+  post-stop.sh: bin/post-stop
 
 packages: 
 - mongodb-mms-4.0.1
-
-properties:
- ops_manager.enc_key_b64:
-  description: A base64 string equivalent of the 24-byte binary file used to encrypt and decrypt Ops Managers backing databases and user credentials. See http://bit.ly/2meuiBg
-  default: EJmS9BJxqCdPrV8P4tZtfpGY2xqcvNfs
- ops_manager.uri:
-  description: MongoDB Connection URI string pointing to the backend database. See http://bit.ly/2dPu67Q
-  default: mongodb://localhost:27017/
- ops_manager.baseport:
-  description: MongoDB HTTP Service PORT.
-  default: 8080
- ops_manager.sslport:
-  description: MongoDB HTTPS Service PORT.
-  default: 8443
- ops_manager.email:
-  description: MongoDB Email to send invites/alerts etc.
-  default: noreply@localhost.com
+- mongodb-4.0.1
 
