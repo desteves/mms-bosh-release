@@ -24,6 +24,11 @@ http://127.0.0.1:${PORT}/user/registerCall \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d "{\"username\":\"$USER\",\"password\":\"$PASS\",\"firstName\":\"Global\",\"lastName\":\"Owner\",\"newGroup\":true,\"jobResponsibility\":\"\",\"response\":\"\"}" )
+
+
 e=$(echo $rp | grep  "\"errorCode\":\"NONE\"")
 
-if [ -z $e ]; then exit 0; else exit 1; fi
+echo "rp" $rp
+echo "e" $e
+
+if [ -z $e ]; then echo "User registered"; exit 0; else echo "Cannot get User registered, check logs"; exit 1; fi
