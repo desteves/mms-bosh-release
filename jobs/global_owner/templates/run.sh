@@ -20,7 +20,7 @@ echo "Registering admin user (username: $USER, password: $PASS)"
 
 rp=$( \
 curl -X POST   \
-http://127.0.0.1:${PORT}/user/registerCall \
+http://${FQDN}:${PORT}/user/registerCall \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -d "{\"username\":\"$USER\",\"password\":\"$PASS\",\"firstName\":\"Global\",\"lastName\":\"Owner\",\"newGroup\":true,\"jobResponsibility\":\"\",\"response\":\"\"}" )
