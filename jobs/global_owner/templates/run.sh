@@ -28,7 +28,8 @@ http://127.0.0.1:${PORT}/user/registerCall \
 
 e=$(echo $rp | grep  "\"errorCode\":\"NONE\"")
 
+# for debugging
 echo "rp" $rp
 echo "e" $e
 
-if [ -z $e ]; then echo "User registered"; exit 0; else echo "Cannot get User registered, check logs"; exit 1; fi
+if [ -z $e ]; then  echo "Cannot get User registered, check logs"; exit 1; else echo "User registered"; exit 0; fi
