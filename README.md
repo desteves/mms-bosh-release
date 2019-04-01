@@ -1,4 +1,4 @@
-# mongodb-release
+# mms-bosh-release
 
 BOSH release for MongoDB Ops Manager 4.0.x
 
