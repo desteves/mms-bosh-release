@@ -21,3 +21,4 @@ packages/*/*.tar
 *.tgz
 create.json
 releases/*
+releases/mms/*
