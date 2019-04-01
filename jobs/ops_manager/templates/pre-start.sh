@@ -5,10 +5,10 @@ LOG_DIR="/var/vcap/sys/log/ops_manager"
 OPS_DIR="/var/vcap/store/ops_manager"
 PIDFILE="${RUN_DIR}/pid"
 
-DATA_DIR=/var/vcap/store/database
-DB_DIR=/var/vcap/packages/mongodb-4.0.1
+DATA_DIR="/var/vcap/store/database"
+DB_DIR="/var/vcap/packages/mongodb-4.0.8"
 
-APP_DIR="/var/vcap/packages/mongodb-mms-4.0.1"
+APP_DIR="/var/vcap/packages/mms-4.0.9"
 APP_NAME="mms-app"
 APP_ENV="hosted"
 APP_ID="mms"

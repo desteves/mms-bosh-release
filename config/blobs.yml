@@ -1,14 +1,6 @@
-mongodb-3.6.1/mongodb-linux-x86_64-3.6.1.tgz:
-  size: 86702083
-  object_id: 308def2b-bf1d-47a4-729c-8a61f8d4f664
-  sha: f6e0c1206c23d1d93379071ac5e8cf2c45d95c8c
-mongodb-4.0.1:
-  size: 70854807
-  sha: 1fff505ee10b2201b76ba686b21762a043a35a15
-mongodb-mms-3.6.1/mongodb-mms-3.6.1.591-1.x86_64.tar:
-  size: 670119294
-  object_id: f390ed5e-7eb2-4bf7-7150-d8df17d8b0a0
-  sha: 718248670dd7fa78e3871bbabce70d822329f2d0
-mongodb-mms-4.0.1:
-  size: 821729409
-  sha: e7259ab116deba244bf6f58ae6f0074be794713e
+mms-4.0.9:
+  size: 942381508
+  sha: 28d1d89b5e2af0b2e9f681d3a27d3241884047b1
+mongodb-4.0.8:
+  size: 84918586
+  sha: b43d43a49c0a469fbadd86df4837fdc34b4a4b65

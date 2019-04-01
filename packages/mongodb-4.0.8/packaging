@@ -1,0 +1,3 @@
+set -xe
+
+tar xzf mongodb-4.0.8 --strip 1 --directory ${BOSH_INSTALL_TARGET}

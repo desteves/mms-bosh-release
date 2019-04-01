@@ -7,6 +7,6 @@ templates:
   post-stop.sh: bin/post-stop
 
 packages: 
-- mongodb-mms-4.0.1
-- mongodb-4.0.1
+- mms-4.0.9
+- mongodb-4.0.8
 

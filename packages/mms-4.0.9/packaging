@@ -1,0 +1,2 @@
+set -xe
+tar xzf mms-4.0.9 --strip 1 --directory ${BOSH_INSTALL_TARGET}

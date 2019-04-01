@@ -7,7 +7,7 @@ BOSH release for MongoDB Ops Manager 4.0.x
 
 ## Build
 
-`bosh create-release --json --final --tarball /tmp/mms.tgz | tee create.json`
+`bosh create-release --json --final --tarball /tmp/mms.tgz | tee /tmp/create.json`
 
 
 ## Run Errand

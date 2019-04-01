@@ -1,0 +1,7 @@
+---
+name: mongodb-4.0.8
+
+dependencies: []
+
+files: 
+- mongodb-4.0.8 #  # https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.8.tgz

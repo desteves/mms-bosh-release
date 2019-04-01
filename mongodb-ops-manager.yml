@@ -1,0 +1,27 @@
+name: mongodb-ops-manager
+releases: 
+  - name: mms
+    version: latest
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+update:
+  canaries: 1
+  max_in_flight: 10
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+instance_groups:
+- name: ops_manager
+  azs: 
+  - z1
+  instances: 1
+  jobs:
+  - name: ops_manager
+    release: mms
+  - name: global_owner
+    release: mms
+  vm_type: large
+  stemcell: default
+  networks:
+  - name: default
