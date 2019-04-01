@@ -1,0 +1,24 @@
+name: mms
+version: "1"
+commit_hash: 4c0b5de
+uncommitted_changes: true
+jobs:
+- name: global_owner
+  version: 0288eed0d6f690b83929b3ee08860da019afb692
+  fingerprint: 0288eed0d6f690b83929b3ee08860da019afb692
+  sha1: 1a5117b3a4b9bb0fcfef6b95c2823f8f6466dfb8
+- name: ops_manager
+  version: d0470fcbbb40b24e7454b142986fae23e77ae714
+  fingerprint: d0470fcbbb40b24e7454b142986fae23e77ae714
+  sha1: 3564cd50b807113637f9b44adccd306ce81c48fa
+packages:
+- name: mms-4.0.9
+  version: 8c75d4d57e3ab67cc16cfb1e2548dea60a6748f5
+  fingerprint: 8c75d4d57e3ab67cc16cfb1e2548dea60a6748f5
+  sha1: bd18c7cd893c4aaddd20ffef6fd6d4d460777a65
+  dependencies: []
+- name: mongodb-4.0.8
+  version: 4a7da04bfcf3e6286a2c1dc52b61dd555fbe3402
+  fingerprint: 4a7da04bfcf3e6286a2c1dc52b61dd555fbe3402
+  sha1: 1b26dd048e10556c2fb138ace3814982033ef8df
+  dependencies: []
