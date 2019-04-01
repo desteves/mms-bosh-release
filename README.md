@@ -1,14 +1,14 @@
-# mms-bosh-release
+# MongoDB Ops Manager BOSH Release
 
 BOSH release for MongoDB Ops Manager 4.0.x
 
 **THIS IS A STANDALONE INSTANCE WITH NO BACKUPS or HTTPS CONFIGURED, FOR DEV ONLY**
 
+See also the PCF Tile [here](https://github.com/desteves/mongodb-ops-manager-tile) 
 
 ## Build
 
 `bosh create-release --json --final --tarball /tmp/mms.tgz | tee create.json`
-
 
 ## Run Errand
 
