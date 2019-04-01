@@ -20,3 +20,4 @@ packages/*/*.tgz
 packages/*/*.tar
 *.tgz
 create.json
+releases/*
