@@ -42,7 +42,7 @@ sed -e "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|" \
 cat <<EOF > ${APP_DIR}/conf/conf-mms.properties
 mongo.ssl=false
 mongo.mongoUri=${URI_STR}
-mms.centralUrl=http://${FQDN}:${BASE_PORT}
+# mms.centralUrl=http://${FQDN}:${BASE_PORT} # check if this can be removed, issue downloading agents
 mms.backupCentralUrl=http://${FQDN}:8081
 mms.fromEmailAddr=$email
 mms.replyToEmailAddr=$email
