@@ -61,7 +61,7 @@ EOF
 [[ -f "${SYSCONFIG}" ]] && . "${SYSCONFIG}"
 
 
-${DB_DIR}/bin/mongod --port 27017 --dbpath ${DATA_DIR} --fork --logpath ${LOG_DIR}/pre-start-database.stdout.log
+${DB_DIR}/bin/mongod --port 27017 --dbpath ${DATA_DIR} --bind_ip_all --fork --logpath ${LOG_DIR}/pre-start-database.stdout.log
 if [[ $? != 0 ]]; then
   exit 1
 fi
