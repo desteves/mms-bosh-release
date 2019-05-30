@@ -42,7 +42,7 @@ sed -e "s|^\(LOG_PATH=\).*|\1${LOG_DIR}|" \
 cat <<EOF > ${APP_DIR}/conf/conf-mms.properties
 mongo.ssl=false
 mongo.mongoUri=${URI_STR}
-mms.centralUrl=http://${FQDN}:${BASE_PORT}
+# mms.centralUrl=http://${FQDN}:${BASE_PORT} # check if this can be removed, issue downloading agents
 mms.backupCentralUrl=http://${FQDN}:8081
 mms.fromEmailAddr=$email
 mms.replyToEmailAddr=$email
@@ -61,7 +61,7 @@ EOF
 [[ -f "${SYSCONFIG}" ]] && . "${SYSCONFIG}"
 
 
-${DB_DIR}/bin/mongod --port 27017 --dbpath ${DATA_DIR} --fork --logpath ${LOG_DIR}/pre-start-database.stdout.log
+${DB_DIR}/bin/mongod --port 27017 --dbpath ${DATA_DIR} --bind_ip_all --fork --logpath ${LOG_DIR}/pre-start-database.stdout.log
 if [[ $? != 0 ]]; then
   exit 1
 fi
