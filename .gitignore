@@ -22,3 +22,5 @@ packages/*/*.tar
 create.json
 releases/*
 releases/mms/*
+.final_builds/jobs/global_owner/index.yml
+.final_builds/jobs/ops_manager/index.yml
