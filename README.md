@@ -1,5 +1,7 @@
 # MongoDB Ops Manager BOSH Release
 
+[![Git](https://app.soluble.cloud/api/v1/public/badges/98167c5c-970c-4218-a075-5ef877445f9f.svg?orgId=679096383598)](https://app.soluble.cloud/repos/details/github.com/desteves/mms-bosh-release?orgId=679096383598)  
+
 BOSH release for MongoDB Ops Manager 4.0.x
 
 **THIS IS A STANDALONE INSTANCE WITH NO BACKUPS or HTTPS CONFIGURED, FOR DEV ONLY**
